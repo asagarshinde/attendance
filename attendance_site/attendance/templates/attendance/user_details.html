@@ -1,0 +1,7 @@
+{% if user_detail %}
+<ul>
+    {% for key,value in user_detail.items %}
+    <li> {{ key }} : {{ value }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
