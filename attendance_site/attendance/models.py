@@ -1,4 +1,6 @@
 from django.db import models
+from multiselectfield import MultiSelectField
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -27,3 +29,8 @@ class user(models.Model):
 class attendance(models.Model):
     userid = models.ForeignKey(user,on_delete=models.CASCADE)
     date_id = models.DateField()
+
+class CenterForm(ModelForm):
+    class Meta:
+        model = center
+        fields = ['head']

@@ -7,4 +7,5 @@ app_name = 'attendance' # by defining app_name in template need to call url patt
 urlpatterns = [
     path('', views.index, name='index'),
     path('user/<int:user_id>/', views.user_details, name='user_index'),
+    path('checkbox/',views.checkboxview, name='check_box')
 ]
