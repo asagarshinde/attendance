@@ -23,3 +23,7 @@ class user(models.Model):
 
     def __str__(self):
         return self.initial
+
+class attendance(models.Model):
+    userid = models.ForeignKey(user,on_delete=models.CASCADE)
+    date_id = models.DateField()
