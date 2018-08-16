@@ -1,0 +1,46 @@
+{% extends 'attendance/base.html' %}
+{% block title %}{{ album }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<!--
+<form action="/update/" method="post">
+        {% csrf_token %}
+        <div class="col-sm-6">
+            {{ date_form }}
+            {{ users }}
+        </div>
+        <input type="submit" value="Submit" />
+</form>
+-->
+<form action="/update/" method="post" name="UpdateForm">
+    {% csrf_token %}
+
+    <table>
+        <div style="text-align:center">
+            {{ users.date_field }}
+            {{ users.selected_center }}
+        </div>
+
+        {% for pk,choice in users.DISPLAY_CHOICES %}
+
+        <div style="text-align:center">
+            <div>
+                <tr>
+                <td><a href="{% url 'attendance:user_index' user.id %}">{{ choice }}</a></td>
+                <label for="id_options_{{ forloop.counter0 }}">
+                    <td><input {% for option in app.options.all %}{% if option.pk == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="options" />
+                </label>
+                    <td>
+                        </tr>
+                <!--<div class="col-lg-1"></div>-->
+            </div>
+        </div>
+        {% endfor %}
+
+    </table>
+</form>
+<div style="text-align:center">
+    <input type="submit" value="Update"/>
+</div>
+{% endblock %}

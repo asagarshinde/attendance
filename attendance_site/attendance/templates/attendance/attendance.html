@@ -4,11 +4,28 @@
 {% block albums_active %}active{% endblock %}
 
 {% block body %}
-{% if user_detail %}
-<ul>
-    {% for key,value in user_detail.items %}
-    <li> {{ key }} : {{ value }}</li>
-    {% endfor %}
-</ul>
+{% if users %}
+<style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+</style>
+}
+    <ul><center>Selected Center is {{ center_name }}</center></ul>
+    <table style="width:60%" align="center">
+
+        <tr>
+            <th>Username</th>
+        </tr>
+        <ul>
+            {% for user in users %}
+            <tr>
+                <td>
+                    <a href="{% url 'attendance:user_index' user.id %}"> {{ user.initial }} {{ user.last_name }} </a></li>
+                </td>
+            </tr>
+            {% endfor %}
+        </ul>
+    </table>
 {% endif %}
 {% endblock %}
