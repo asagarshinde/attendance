@@ -4,6 +4,8 @@
 {% block albums_active %}active{% endblock %}
 
 {% block body %}
+{% if user.is_authenticated %}
+<p><a href="{% url 'attendance:logout' %}">logout</a></p>
 {% if users %}
     <ul>
         {% for user in users %}
@@ -12,5 +14,9 @@
     </ul>
 {% else %}
     <p>No users are available.</p>
+{% endif %}
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'attendance:login' %}">login</a>
 {% endif %}
 {% endblock %}

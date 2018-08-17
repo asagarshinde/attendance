@@ -4,7 +4,9 @@ from django.template import loader
 from django.shortcuts import render
 from .forms import CheckBoxTest,CenterForm,UserChangeForm,UpdateForm,attendanceForm,DateForm,UpdateFormWithCenter
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login/')
 def index(request):
     users = User.objects.all()
     template = loader.get_template('attendance/users.html')
@@ -22,7 +24,7 @@ def user_details(request,user_id):
     }
     return render(request,'attendance/user_details.html', context)
 
-
+@login_required(login_url='/login/')
 def checkboxview(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -60,6 +62,8 @@ def checkboxview(request):
 
     return render(request, 'attendance/checkbox.html',context)
 
+
+@login_required(login_url='/login/')
 def update_attendance(request):
     if request.method == 'POST':
         update_form = UpdateForm(request.POST)

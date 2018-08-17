@@ -27,7 +27,7 @@
         <div style="text-align:center">
             <div>
                 <tr>
-                <td><a href="{% url 'attendance:user_index' user.id %}">{{ choice }}</a></td>
+                <td><a href="{% url 'attendance:user_index' pk %}">{{ choice }}</a></td>
                 <label for="id_options_{{ forloop.counter0 }}">
                     <td><input {% for option in app.options.all %}{% if option.pk == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="options" />
                 </label>
@@ -39,8 +39,9 @@
         {% endfor %}
 
     </table>
-</form>
-<div style="text-align:center">
+    <div style="text-align:center">
     <input type="submit" value="Update"/>
 </div>
+</form>
+
 {% endblock %}
