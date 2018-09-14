@@ -61,13 +61,12 @@ class UpdateFormWithCenter(forms.Form):
         choice_list = [(value['id'], str(value['initial']) + " " + str(value['last_name'])) for value in user_list]
         self.DISPLAY_CHOICES = tuple(choice_list)
         self.fields['users'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=self.DISPLAY_CHOICES)
-
         self.fields['date_field'] = forms.DateField(widget=forms.SelectDateWidget(), label='Joining Date', initial=datetime.now())
         centers = Center.objects.all()
         center_obj = centers.values()
         center_list = [(ce['id'], ce['center_name']) for ce in center_obj]
-        center_list.insert(0, (0, "Select center First"))
-        center_list.pop(0)
+#        center_list.insert(0, (0, "Select center First"))
+#        center_list.pop(0)
         for i,t in enumerate(center_list):
             if str(center_id) == str(t[0]):
                 first_element = center_list[0]

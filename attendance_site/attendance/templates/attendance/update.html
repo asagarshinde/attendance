@@ -16,29 +16,30 @@
 <form action="/update/" method="post" name="UpdateForm">
     {% csrf_token %}
 
-    <table>
+
         <div style="text-align:center">
             {{ users.date_field }}
             {{ users.selected_center }}
         </div>
 
-        {% for pk,choice in users.DISPLAY_CHOICES %}
-
-        <div style="text-align:center">
+        <table width="400" border="2" cellspacing="0" cellpadding="0" align="center">
             <div>
-                <tr>
-                <td><a href="{% url 'attendance:user_index' pk %}">{{ choice }}</a></td>
+                <tr><td style="text-align:center"><strong>Name</strong></td><td style="text-align:center">Sort Selected</td></tr>
+        {% for pk,choice in users.DISPLAY_CHOICES %}
+            <tr>
+            <td style="text-align:center"><a href="{% url 'attendance:user_index' pk %}">{{ choice }}</a></td>
                 <label for="id_options_{{ forloop.counter0 }}">
-                    <td><input {% for option in app.options.all %}{% if option.pk == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="options" />
-                </label>
-                    <td>
-                        </tr>
-                <!--<div class="col-lg-1"></div>-->
-            </div>
-        </div>
-        {% endfor %}
 
-    </table>
+                    {% if pk in users.selected_users.value %}
+                    <td style="text-align:center"><input {% for option in app.options.all %}{% if option.pk == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="options" checked/>
+                </label></td>
+                {% else %}
+                <td style="text-align:center"><input {% for option in app.options.all %}{% if option.pk == pk %}checked="checked"{% endif %}{% endfor %} type="checkbox" id="id_options_{{ forloop.counter0 }}" value="{{ pk }}" name="options" />
+                {% endif %}
+            </tr>
+        {% endfor %}
+                </div>
+        </table>
     <div style="text-align:center">
     <input type="submit" value="Update"/>
 </div>

@@ -30,7 +30,7 @@ def checkboxview(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         centerform = CenterForm(request.POST)
-        print(centerform)
+        # print(centerform)
         # check whether it's valid:
         if centerform.is_valid():
             # process the data in form.cleaned_data as required
@@ -84,7 +84,6 @@ def update_attendance(request):
         req = request.POST
         date = req['date_field_year'] + "-" + req['date_field_month'] + "-" + req['date_field_day']
         datetime_obj = datetime.strptime(date,"%Y-%m-%d")
-        #print(req.getlist('options'))
         if req.getlist('options'):
             for user_id in req.getlist('options'):
                 user_obj = User.objects.get(pk=user_id)
@@ -94,7 +93,7 @@ def update_attendance(request):
                     update = Attendance(user=user_obj,date_id=datetime_obj)
                     update.save()
                 result = Attendance.objects.all()
-            return HttpResponse(result.values())
+            return HttpResponse(result)
         else:
             center_id= req['selected_center']
             update_form = UpdateFormWithCenter(u=center_id)
@@ -106,11 +105,15 @@ def update_attendance(request):
             #return HttpResponse("getting data")
 
     else:
-        update_form = UpdateForm
-        print (update_form)
+        d = datetime.now()
+        marked_attendance = Attendance.objects.filter(date_id=d)
+        marked_attendance_list = [ u['user_id'] for u in marked_attendance.values() ]
+        print ("**********",marked_attendance_list)
+        update_form = UpdateForm(initial={'selected_users':marked_attendance_list})
         context = {
             'users' : update_form,
         }
+        # print(update_form.__dict__)
         return render(request,'attendance/update.html',context)
 
 def show_date(request):
@@ -118,7 +121,7 @@ def show_date(request):
         date_form = DateForm(request.POST)
         if date_form.is_valid():
             data = date_form.cleaned_data
-            print (data['date_field'])
+            #print (data['date_field'])
             return HttpResponse(data['date_field'])
     else:
         date_form = DateForm(user=None)
